@@ -56,40 +56,185 @@ class _HomePageState extends State<SalaryCalculatorApp> {
         backgroundColor: Colors.white70,
         title: Center(child: Text("Salary calculator app") ),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            TextField(
-              controller: salaryController,
-              decoration: InputDecoration(
-                  labelText: "Salariul brut",
-                  border: OutlineInputBorder()
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: TextField(
+                    controller: salaryController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: "Salariul brut",
+                      hintText: "Introdu salariul",
+                      prefixIcon: Icon(Icons.attach_money),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 15),
+
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      Text(
+                        "Tip angajat",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      const SizedBox(height: 5),
+
+                      DropdownButton<String>(
+                        value: selectedType,
+                        hint: Text("Selectează"),
+                        isExpanded: true,
+                        items: [
+                          DropdownMenuItem(
+                            value: "standard",
+                            child: Text("Standard"),
+                          ),
+                          DropdownMenuItem(
+                            value: "stagiar",
+                            child: Text("Stagiar"),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            selectedType = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 30),
+
+            SizedBox(
+              width: 180,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: calculateSalary,
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  "CALCULEAZĂ",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
-            DropdownButton<String>(value: selectedType, items: [
-              DropdownMenuItem(value: "standard", child: Text("standard"),),
-              DropdownMenuItem(value: "stagiar",child: Text("stagiar"))
-            ],
-              onChanged: (value){
-                setState(() {
-                  selectedType = value;
-                });
-              },),
 
-            ElevatedButton(
-              onPressed: calculateSalary,
-              child: Text("CALCULEAZĂ"),
-            ),
-            Text(
-              "Impozit: ${tax.toStringAsFixed(2)}",
-            ),
+            const SizedBox(height: 35),
 
-            Text(
-              "Salariu net: ${netSalary.toStringAsFixed(2)}",
-            ),
+            Row(
+              children: [
 
+                Expanded(
+                  child: Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(18),
+                      child: Column(
+                        children: [
+
+                          Icon(
+                            Icons.receipt_long,
+                            size: 30,
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          Text(
+                            "Impozit",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          const SizedBox(height: 5),
+
+                          Text(
+                            "${tax.toStringAsFixed(2)} lei",
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 15),
+
+                Expanded(
+                  child: Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(18),
+                      child: Column(
+                        children: [
+
+                          Icon(
+                            Icons.account_balance_wallet,
+                            size: 30,
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          Text(
+                            "Salariu net",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          const SizedBox(height: 5),
+
+                          Text(
+                            "${netSalary.toStringAsFixed(2)} lei",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
-
         ),
       ),
     );
