@@ -234,6 +234,16 @@ class _HomePageState extends State<SalaryCalculatorApp> {
                 ),
               ],
             ),
+            const SizedBox(height: 20),
+
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.asset(
+                'assets/images/dollars_in_the_sky.jpg',
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+            ),
           ],
         ),
       ),
